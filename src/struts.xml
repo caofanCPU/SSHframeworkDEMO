@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">  
+  
+<struts>  
+	<!-- 告知Struts2运行时使用Spring来创建对象 -->
+	<!-- 指定objectFactory 为spring，把action的生命周期管理交给spring进行 -->
+	<constant name="struts.objectFactory" value="spring"/>
+
+  	<!-- 修改struts中default.properties定义的常量值 -->
+  	<!-- 修改struts配置文件时，使用开发者模式 -->
+  	<constant name="struts.devMode" value="true" />
+  	<!-- 动态方法调用 -->
+    <!-- <constant name="struts.enable.DynamicMethodInvocation" value="true" /> -->
+    <!--关闭浏览器缓存 -->
+    <constant name="browserCache" value="false" />
+    <!--设置修改配置文件后不用重启服务器就生效 -->
+    <constant name="struts.configuration.xml.reload" value="true" />
+  	
+    <package name="xyb" extends="struts-default">  
+    <!-- 第2步：定义一个action，配置跳转信息 name 类似于Servlet @WebServlet("/IndexServlet") 
+           http://xxxx/xxx/Index.action http://xxxx/xxx/Index class 对应于自己写的Action类
+              当不写method属性时，默认调用的是execute
+           class="ssh.action.IndexAction" 相当于 new ssh.action.IndexAction()
+             设计思想：关心了具体的实现类必须改为不要关注那个实现类 加入spring后，struts的action节点的class属性意义发生变化，直接引用spring帮忙创建的实例 
+	-->
+        <action name="register" class="regAction" >  
+        	<!-- 跳转是forward，/WEB-INF/下的.jsp或html文件，其目的是防止jsp不经过action就可以访问-->
+            <!-- result接收返回的字符串，然后做对应的事情 -->           
+            <result name="input">/Register.jsp</result>  
+            <result name="success">/Success.jsp</result>  
+            <result name="error">/Fail.jsp</result>  
+        </action>  
+    </package>  
+  
+</struts>

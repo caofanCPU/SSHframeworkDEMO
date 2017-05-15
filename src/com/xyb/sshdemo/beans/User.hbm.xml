@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding='UTF-8'?>  
+<!DOCTYPE hibernate-mapping PUBLIC  
+	 "-//Hibernate/Hibernate Mapping DTD 3.0//EN"  
+	 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >  
+
+<!--  指定POJO类所在的包： package="com.xyb.sshdemo.beans"
+		指定POJO类名： class name="User"
+		指定POJO类所映射的数据库表名：table="user"
+ -->  
+<hibernate-mapping package="com.xyb.sshdemo.beans">  
+    <class name="User" table="user">  
+        <id name="userId" column="userId">
+        <!--  根据本地数据库的设置来创建userId
+        		若需要在程序中指定主键的值，则将generator的class属性设置为assigned
+         -->  
+            <generator class="native"></generator>  
+        </id> 
+        
+        <!--  根据POJO类所对应的表，映射每个字段名及其类型 --> 
+        <property name="username" column="userName" type="java.lang.String"  
+            not-null="true" length="16"></property>  
+        <property name="password" column="password" type="java.lang.String"  
+            not-null="true" length="16" />  
+        <property name="gender" column="gender" type="java.lang.Integer" length="1" />  
+    </class>  
+</hibernate-mapping>
