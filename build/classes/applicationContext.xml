@@ -1,49 +1,104 @@
-<?xml version="1.0" encoding="UTF-8"?>       
-<beans xmlns="http://www.springframework.org/schema/beans"    
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   
-        xmlns:p="http://www.springframework.org/schema/p"  
-        xmlns:aop="http://www.springframework.org/schema/aop"   
-        xmlns:context="http://www.springframework.org/schema/context"  
-        xmlns:jee="http://www.springframework.org/schema/jee"  
-        xmlns:tx="http://www.springframework.org/schema/tx"  
-        xsi:schemaLocation="    
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd  
           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd  
           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-  
-  
-	<!-- 把Action注入给Service --> 
-    <bean id="regAction" class="com.xyb.sshdemo.action.RegisterAction" scope="prototype">  
-        <property name="userManagerImpl" ref="userManager"></property>  
-    </bean>    
 
-    <!-- 把注册Service注入给DAO --> 
-    <bean id="userManager" class="com.xyb.sshdemo.serviceImpl.UserManagerImpl" scope="prototype">
-        <property name="userDao" ref="baseDao"></property>  
-    </bean>
 
-   <!-- 把DAO注入给Session工厂 -->
-    <bean id="baseDao" class="com.xyb.sshdemo.daoImpl.UserDao" scope="prototype">  
-        <property name="sessionFactory" ref="sessionFactory" ></property>  
-    </bean> 
-  
-    <!-- 添加sessionFactory bane ，注意，该类是Spring提供的 -->
-    <!-- 指定了Hibernate的配置文件路径 -->  
-    <bean id="sessionFactory"  class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" scope="prototype"> 
-    	<!-- 注入Hibernate 配置文件路径,前面要加上  classpath:-->
-         <property name="configLocation" value="classpath:Hibernate.cfg.xml"/>
-         
-        <property name="hibernateProperties">  
-            <props>  
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>  
-                <prop key="show_sql">true</prop>  
-                <prop key="hibernate.jdbc.batch_size">20</prop>  
-            </props>  
-        </property>  
-    </bean> 
-     
-   <!-- more bean definitions go here -->  
-  
+	<!-- 把Action注入给Service -->
+	<bean
+		id="regAction"
+		class="com.xyb.sshdemo.action.RegisterAction"
+		scope="prototype">
+		<property
+			name="userManagerImpl"
+			ref="userManager">
+		</property>
+	</bean>
+
+	<!-- 把注册Service注入给DAO -->
+	<bean
+		id="userManager"
+		class="com.xyb.sshdemo.serviceImpl.UserManagerImpl"
+		scope="prototype">
+		<property
+			name="userDao"
+			ref="baseDao">
+		</property>
+	</bean>
+
+	<!-- 把DAO注入给Session工厂 -->
+	<bean
+		id="baseDao"
+		class="com.xyb.sshdemo.daoImpl.UserDao"
+		scope="prototype">
+		<property
+			name="sessionFactory"
+			ref="sessionFactory">
+		</property>
+	</bean>
+
+	<bean
+		id="dataSource"
+		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property
+			name="driverClass"
+			value="com.mysql.jdbc.Driver">
+		</property>
+		<property
+			name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/sshDB?useSSL=true">
+		</property>
+		<property
+			name="user"
+			value="root">
+		</property>
+		<property
+			name="password"
+			value="root">
+		</property>
+	</bean>
+
+	<bean
+		id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		scope="prototype">
+		<property
+			name="dataSource"
+			ref="dataSource">
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<property
+			name="mappingLocations"
+			value="classpath:com/xyb/sshdemo/beans/User.hbm.xml" />
+	</bean>
+
+	<!-- 
+		Spring + Hibernate，Hibernate负责数据源
+		 <bean  id="sessionFactory" 
+		 		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" 
+				scope="prototype">
+				<property name="configLocation" value="classpath:Hibernate.cfg.xml"/> 
+		</bean>
+	 -->
+
+	<!-- more bean definitions go here -->
+
 </beans>

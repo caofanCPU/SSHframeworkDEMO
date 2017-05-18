@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<web-app id="starter" version="2.4"
-         xmlns="http://java.sun.com/xml/ns/j2ee"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app version="3.1"
+  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="hhttp://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-common_3_1.xsd">
+  
+	<display-name>SSH Example</display-name>
 
-  <display-name>SSH  Example</display-name>
-
-
-  <!-- Filters -->
-  <!-- START SNIPPET: filter -->
-    <filter>
-        <filter-name>SSHdemo</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
-        <init-param>
+	<!-- Filters -->
+	<!-- START SNIPPET: filter -->
+	<filter>
+		<filter-name>SSHdemo</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+		<init-param>
 			<param-name>config</param-name>
 			<param-value>struts-default.xml,struts-plugin.xml,struts.xml</param-value>
 		</init-param>
-    </filter>
-    
-    <!-- END SNIPPET: filter -->
+	</filter>
 
-    <filter-mapping>
-        <filter-name>SSHdemo</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+	<!-- END SNIPPET: filter -->
 
-	<!--  指明Spring MVC配置文件applicationContext.xml 的路径
-		因为applicationContext.xml放在了src目录下
-		所以对应路径为：WEB_INF/classes/applicationContext.xml
-		
-		如果觉得麻烦，可将applicationContext.xml放在WEB-INF下，与web.xml同目录
-		但是，实际开发中，配置文件需要指定专门的目录，因而必须要了解 目录对应关系
-	 -->
+	<filter-mapping>
+		<filter-name>SSHdemo</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!--
+	指明Spring MVC配置文件applicationContext.xml 的路径 因为applicationContext.xml放在了src目录下 
+	所以对应路径为：WEB_INF/classes/applicationContext.xml 如果觉得麻烦，
+	可将applicationContext.xml放在WEB-INF下，与web.xml同目录 
+	但是，实际开发中，配置文件需要指定专门的目录，因而必须要了解 目录对应关系
+	-->
 	<context-param>
-				    <param-name>contextConfigLocation</param-name>
-				    <!-- <param-value>classpath*:/applicationContext.xml</param-value> -->
-				    <param-value>/WEB-INF/classes/applicationContext.xml</param-value>
+		<param-name>contextConfigLocation</param-name>
+		<!-- <param-value>classpath:/applicationContext.xml</param-value> -->
+		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
-	<listener>  
-	        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-    <!-- Welcome file lists -->
-    <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
-    </welcome-file-list>
+
+	<!-- Welcome file lists -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

@@ -1,50 +1,25 @@
 <?xml version='1.0' encoding='utf-8'?>  
 <!DOCTYPE hibernate-configuration PUBLIC  
 	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"  
-	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">  
-  
-<hibernate-configuration>  
-  <session-factory>  
-    <!-- 数据库连接配置 -->  
-    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>  
-    <property name="connection.url">jdbc:mysql://localhost:3306/sshDB?useSSL=true</property>  
-    <property name="connection.username">root</property>  
-    <property name="connection.password">root</property>  
-    
-    <!-- JDBC 连接池配置，使用HibernateC3P0连接池 -->  
-    
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
-	<property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>    
-	<property name="hibernate.c3p0.max_size">20</property>    
-	<property name="hibernate.c3p0.min_size">5</property>    
-	<property name="hibernate.c3p0.timeout">120</property>    
-	<property name="hibernate.c3p0.max_statements">100</property>    
-	<property name="hibernate.c3p0.idle_test_period">120</property>    
-	<property name="hibernate.c3p0.acquire_increment">2</property>
+<hibernate-configuration>
+	<session-factory>
+		<!-- 数据库连接配置 -->
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.url">jdbc:mysql://localhost:3306/sshDB?useSSL=true</property>
+		<property name="connection.username">root</property>
+		<property name="connection.password">root</property>
 
-    <!-- SQL方言(就是区分MySQL、ORACLE数据库语句) 
-    	因使用是MySQL数据库，因而其值为org.hibernate.dialect.MySQLDialect
-    -->  
-    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>  
-  
-    <!-- Enable Hibernate's automatic session context management -->  
-    <!-- <property name="current_session_context_class">thread</property> -->  
-  
-    <!-- Disable the second-level cache  -->  
-    <!-- <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property> -->  
-  
-    <!-- Echo all executed SQL to stdout -->  
-    <property name="show_sql">true</property>  
-    <!-- 格式化显示SQL -->
-    <property name="format_sql">true</property>
-  
-    <!-- Drop and re-create the database schema on startup -->  
-    <!-- <property name="hbm2ddl.auto">update</property> -->  
-    
-    <!--  在Hibernate.cfg.xml引入实体类说明文件User.hbm.xml
-    	否则报错：org.hibernate.MappingException: Unknown entity: com.xyb.sshdemo.beans.User
-     -->
-     <!-- 数据表映射配置文件 -->
-    <mapping resource="com/xyb/sshdemo/beans/User.hbm.xml" />
-  </session-factory>  
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+
+		<!-- 在Hibernate.cfg.xml引入实体类说明文件User.hbm.xml 否则报错：org.hibernate.MappingException: 
+						Unknown entity: com.xyb.sshdemo.beans.User -->
+		<!-- 数据表映射配置文件 -->
+		<mapping resource="com/xyb/sshdemo/beans/User.hbm.xml" />
+
+	</session-factory>
+
 </hibernate-configuration>
